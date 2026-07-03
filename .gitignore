@@ -1,6 +1,8 @@
 # IA & Configurações de Agentes Locais
 .agents/
 .gemini/
+AGENTS.md
+CLAUDE.md
 
 # Banco de dados local SQLite
 *.db
