@@ -4,6 +4,9 @@
 AGENTS.md
 CLAUDE.md
 
+# Documentação local do desafio
+Roteiro.md
+
 # Banco de dados local SQLite
 *.db
 *.db-journal
