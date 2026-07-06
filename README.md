@@ -28,12 +28,19 @@ Este projeto foi desenvolvido como solução para um desafio técnico, utilizand
 - **Deleção em Cascata (Cascade Delete)**: Ao excluir um morador, todas as transações (receitas/despesas) vinculadas a ele são automaticamente removidas do banco de dados para evitar registros órfãos.
 
 ### 2. Cadastro de Transações (Receitas e Despesas)
-- Registro de movimentações financeiras indicando descrição, valor, tipo e morador associado.
+- Registro de movimentações financeiras indicando descrição, valor, tipo, data e morador associado.
 - **Restrição de Idade**: Menores de 18 anos são impedidos de registrar transações do tipo **Receita** (entradas), sendo permitido apenas o registro de **Despesas** (saídas). Essa regra é validada tanto preventivamente na interface (frontend) quanto de forma impeditiva no servidor (backend).
+- **Data Customizável**: O usuário pode selecionar a data exata em que o pagamento ou recebimento foi realizado (sem ficar preso estritamente ao dia atual).
+- **Ordenação Cronológica**: As transações são exibidas de forma ordenada, mostrando as mais recentes primeiro no topo da listagem.
 
 ### 3. Consulta de Totais (Dashboard)
 - Listagem individual de moradores exibindo o total acumulado de receitas, despesas e o saldo líquido individual (`Receitas - Despesas`).
 - Painel geral destacado no topo exibindo o somatório geral acumulado de toda a residência.
+
+### 🌟 Melhorias de Experiência do Usuário (UX) Adicionadas
+- **Filtro de Transações por Morador**: Na página de transações, é possível filtrar a lista para exibir apenas os lançamentos de um morador específico através de um seletor rápido.
+- **Seletor de Datas Livre**: Flexibilidade para lançar despesas e receitas retroativas ou futuras.
+- **Visualização Temporal**: Transações listadas com a data formatada em padrão nacional (`dd/mm/aaaa`) ordenadas de forma decrescente para facilitar a auditoria financeira.
 
 ---
 
