@@ -144,17 +144,29 @@ app.MapDelete("/api/pessoas/{id:guid}", async (Guid id, AppDbContext db) =>
 // ENDPOINTS DE TRANSAÇÕES
 // ==========================================
 
-// Listar todas as transações
-app.MapGet("/api/transacoes", async (AppDbContext db) =>
+// Listar transações com filtro opcional por pessoa e ordenadas da mais recente para a mais antiga
+app.MapGet("/api/transacoes", async (AppDbContext db, Guid? pessoaId) =>
 {
-    // Retorna as transações carregando também os dados da Pessoa vinculada
-    var transacoes = await db.Transacoes
+    // Monta a query base incluindo a navegação para Pessoa
+    var query = db.Transacoes
         .Include(t => t.Pessoa)
+        .AsQueryable();
+
+    // Aplica o filtro por pessoa caso informado via query string (?pessoaId=...)
+    if (pessoaId.HasValue)
+    {
+        query = query.Where(t => t.PessoaId == pessoaId.Value);
+    }
+
+    // Ordena da transação mais recente para a mais antiga
+    var transacoes = await query
+        .OrderByDescending(t => t.Data)
         .Select(t => new TransacaoOutputDto(
             t.Id,
             t.Descricao,
             t.Valor,
             t.Tipo,
+            t.Data,
             t.PessoaId,
             t.Pessoa != null ? t.Pessoa.Nome : "Desconhecido"
         ))
@@ -197,6 +209,7 @@ app.MapPost("/api/transacoes", async (TransacaoInputDto input, AppDbContext db) 
         Descricao = input.Descricao.Trim(),
         Valor = input.Valor,
         Tipo = input.Tipo,
+        Data = input.Data.ToUniversalTime(),
         PessoaId = input.PessoaId
     };
 
@@ -209,6 +222,7 @@ app.MapPost("/api/transacoes", async (TransacaoInputDto input, AppDbContext db) 
         novaTransacao.Descricao,
         novaTransacao.Valor,
         novaTransacao.Tipo,
+        novaTransacao.Data,
         novaTransacao.PessoaId,
         pessoa.Nome
     );
@@ -278,11 +292,11 @@ app.Run();
 // DTO para dados de entrada de Pessoa
 public record PessoaInputDto(string Nome, int Idade);
 
-// DTO para dados de entrada de Transação
-public record TransacaoInputDto(string Descricao, decimal Valor, TipoTransacao Tipo, Guid PessoaId);
+// DTO para dados de entrada de Transação (inclui Data selecionada pelo usuário)
+public record TransacaoInputDto(string Descricao, decimal Valor, TipoTransacao Tipo, DateTime Data, Guid PessoaId);
 
-// DTO para saída estruturada de Transação
-public record TransacaoOutputDto(Guid Id, string Descricao, decimal Valor, TipoTransacao Tipo, Guid PessoaId, string NomePessoa);
+// DTO para saída estruturada de Transação (inclui Data para exibição)
+public record TransacaoOutputDto(Guid Id, string Descricao, decimal Valor, TipoTransacao Tipo, DateTime Data, Guid PessoaId, string NomePessoa);
 
 // DTOs para o cálculo do Dashboard consolidado
 public record PessoaTotalDto(Guid Id, string Nome, int Idade, decimal TotalReceitas, decimal TotalDespesas, decimal Saldo);

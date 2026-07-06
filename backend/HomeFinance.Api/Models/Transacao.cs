@@ -30,6 +30,9 @@ public class Transacao
     // Tipo de transação (Despesa ou Receita)
     public TipoTransacao Tipo { get; set; }
 
+    // Data em que a transação foi realizada (selecionada pelo usuário)
+    public DateTime Data { get; set; }
+
     // Identificador da pessoa associada
     public Guid PessoaId { get; set; }
 

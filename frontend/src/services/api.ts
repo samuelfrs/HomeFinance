@@ -23,6 +23,7 @@ export interface Transacao {
   descricao: string;
   valor: number;
   tipo: TipoTransacao;
+  data: string; // ISO 8601 (ex: "2025-07-03T00:00:00Z")
   pessoaId: string;
   nomePessoa: string;
 }
@@ -31,6 +32,7 @@ export interface TransacaoInput {
   descricao: string;
   valor: number;
   tipo: TipoTransacao;
+  data: string; // ISO 8601 enviado ao backend
   pessoaId: string;
 }
 
@@ -138,9 +140,13 @@ export const pessoasService = {
 
 // Serviços relacionados a Transações
 export const transacoesService = {
-  // Listar todas as transações
-  getAll: async (): Promise<Transacao[]> => {
-    const response = await fetch(`${API_BASE_URL}/transacoes`, {
+  // Listar transações com filtro opcional por pessoaId
+  getAll: async (pessoaId?: string): Promise<Transacao[]> => {
+    const url = pessoaId
+      ? `${API_BASE_URL}/transacoes?pessoaId=${pessoaId}`
+      : `${API_BASE_URL}/transacoes`;
+
+    const response = await fetch(url, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
       cache: 'no-store',
