@@ -283,6 +283,13 @@ app.MapGet("/api/dashboard", async (AppDbContext db) =>
 .WithName("GetDashboard")
 .WithOpenApi();
 
+// Aplica migrações pendentes e cria o banco de dados se não existir no startup
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
+
 app.Run();
 
 // ==========================================
