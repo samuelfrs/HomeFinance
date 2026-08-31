@@ -1,0 +1,40 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum TipoTransacao {
+  Receita
+  Despesa
+}
+
+model Pessoa {
+  id         String      @id @default(uuid())
+  nome       String
+  idade      Int
+  transacoes Transacao[]
+
+  createdAt  DateTime    @default(now()) @map("created_at")
+  updatedAt  DateTime    @updatedAt @map("updated_at")
+
+  @@map("pessoas")
+}
+
+model Transacao {
+  id        String        @id @default(uuid())
+  descricao String
+  valor     Float
+  tipo      TipoTransacao
+  data      DateTime
+  pessoaId  String        @map("pessoa_id")
+  pessoa    Pessoa        @relation(fields: [pessoaId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime      @default(now()) @map("created_at")
+  updatedAt DateTime      @updatedAt @map("updated_at")
+
+  @@map("transacoes")
+}
