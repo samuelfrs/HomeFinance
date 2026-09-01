@@ -51,7 +51,7 @@ async function bootstrap() {
   });
 
   const port = process.env.PORT || 5090;
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
 
   logger.log(`🚀 HomeFinance API rodando em: http://localhost:${port}/api`);
   logger.log(`📚 Swagger Docs disponível em: http://localhost:${port}/api/docs`);
