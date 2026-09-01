@@ -144,5 +144,5 @@ npm run test:e2e
 **Samuel Farias**  
 Engenheiro de Telecomunicações (UFC) & Desenvolvedor Full-Stack TypeScript  
 * 🌐 **Portfólio**: [samuelfarias.vercel.app](https://samuelfarias.vercel.app)  
-* 💼 **LinkedIn**: [linkedin.com/in/samuel-farias-0a8236212](https://linkedin.com/in/samuel-farias-0a8236212/)  
+* 💼 **LinkedIn**: [linkedin.com/in/samuel-farias-0a8236212](https://www.linkedin.com/in/samuelgfarias/)
 * 🐙 **GitHub**: [github.com/samuelfrs](https://github.com/samuelfrs)
