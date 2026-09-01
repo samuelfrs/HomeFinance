@@ -18,7 +18,7 @@ export default function DashboardPage() {
       setData(summary);
     } catch (err: any) {
       console.error(err);
-      setError('Não foi possível conectar ao servidor backend. Certifique-se de que a API NestJS está rodando em http://localhost:5090.');
+      setError('Não foi possível carregar os dados financeiros. Tente novamente em instantes.');
     } finally {
       setLoading(false);
     }

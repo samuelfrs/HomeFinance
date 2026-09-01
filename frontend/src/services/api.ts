@@ -1,5 +1,5 @@
-// Definição da URL base da API do backend NestJS
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5090/api';
+// Definição da URL base da API
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
 // ==========================================
 // TIPAGEM DE DADOS (TypeScript Interfaces)
