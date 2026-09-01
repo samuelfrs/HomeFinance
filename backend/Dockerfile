@@ -29,4 +29,4 @@ COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
 EXPOSE 5090
 
-CMD ["node", "dist/src/main"]
+CMD ["node", "dist/main"]
