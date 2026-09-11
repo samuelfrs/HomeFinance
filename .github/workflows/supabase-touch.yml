@@ -1,0 +1,18 @@
+﻿name: Supabase Keep Alive
+
+on:
+  schedule:
+    # Executa a cada 3 dias às 12:00 UTC
+    - cron: '0 12 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase API
+        run: |
+          curl -s -f -o /dev/null -w "%{http_code}" \
+            -H "apikey: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable__Wa5S-wgiahMvOs9XjQ69A_HMw-omKT' }}" \
+            -H "Authorization: Bearer ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable__Wa5S-wgiahMvOs9XjQ69A_HMw-omKT' }}" \
+            "https://gusodbndlerghxccihjh.supabase.co/rest/v1/pessoas?select=id&limit=1"
